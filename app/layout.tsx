@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'UnBotIt - Strip AI Artifacts Instantly',
     description: 'Clean raw text responses from ChatGPT, Claude, and DeepSeek before pasting into emails or documents.',
-    url: 'https://unbotit.vercel.app', // استبدله بالدومين الخاص بك لاحقاً
+    url: 'https://unbotit.vercel.app',
     siteName: 'UnBotIt',
     locale: 'en_US',
     type: 'website',
@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'UnBotIt - Free AI Text Cleaner',
     description: 'Remove markdown clutter and asterisks from AI text instantly.',
+  },
+  // تم إضافة كود إثبات الملكية لجوجل هنا 👇
+  verification: {
+    google: 'xzYfReGy14Gd-pZH9hpyftSOrp6mUmQCIpDIsBN8yic',
   },
 };
 
