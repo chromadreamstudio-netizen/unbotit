@@ -357,9 +357,15 @@ Feel free to check out [our website](https://unbotit.com) for more details!`;
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-slate-800/80 py-6 bg-slate-950/80 text-center text-xs text-slate-500">
-        <p>UnBotIt © {new Date().getFullYear()} — Client-side text cleaning. Built with Next.js & Tailwind CSS.</p>
+      <footer className="relative z-10 border-t border-slate-800/80 py-8 bg-slate-950/90 mt-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500">
+            UnBotIt © {new Date().getFullYear()} — Client-side text cleaning.
+          </p>
+          <div className="flex items-center gap-6 text-xs font-medium text-slate-400">
+            <a href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-cyan-400 transition-colors">Terms of Service</a>
+            <a href="mailto:support@unbotit.com" className="hover:text-cyan-400 transition-colors">Contact Us</a>
+          </div>
+        </div>
       </footer>
-    </div>
-  );
-}
