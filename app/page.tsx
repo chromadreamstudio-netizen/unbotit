@@ -96,6 +96,9 @@ Feel free to check out [our website](https://unbotit.com) for more details!`;
           </div>
 
           <div className="flex items-center gap-5">
+            <a href="/clean" className="text-xs sm:text-sm text-cyan-400 font-semibold hover:text-cyan-300 transition-colors flex items-center gap-1">
+              ⚡ Solutions Hub
+            </a>
             <a href="#features" className="text-xs sm:text-sm text-slate-400 hover:text-white transition-colors">
               Features
             </a>
