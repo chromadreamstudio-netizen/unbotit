@@ -1,34 +1,63 @@
-export function unBotText(text: string): string {
+export interface CleanerOptions {
+  removeAsterisks?: boolean;
+  removeHeaders?: boolean;
+  removeCodeBlocks?: boolean;
+  removeBullets?: boolean;
+  removeLinks?: boolean;
+}
+
+export function unBotText(text: string, options: CleanerOptions = {}): string {
   if (!text) return '';
 
-  return text
-    // 1. إزالة التنسيقات العريضة والمائلة (***, **, *, ___, __, _)
-    .replace(/\*\*\*(.*?)\*\*\*/g, '$1')
-    .replace(/\*\*(.*?)\*\*/g, '$1')
-    .replace(/\*(.*?)\*/g, '$1')
-    .replace(/___(.*?)___/g, '$1')
-    .replace(/__(.*?)__/g, '$1')
-    .replace(/_(.*?)_/g, '$1')
+  const {
+    removeAsterisks = true,
+    removeHeaders = true,
+    removeCodeBlocks = false,
+    removeBullets = true,
+    removeLinks = true,
+  } = options;
 
-    // 2. إزالة العناوين (#, ##, ###, إلخ)
-    .replace(/^#{1,6}\s+/gm, '')
+  let cleaned = text;
 
-    // 3. إزالة علامات الاقتباس (>)
-    .replace(/^>\s+/gm, '')
+  // 1. Remove Bold / Italic asterisks and underscores
+  if (removeAsterisks) {
+    cleaned = cleaned
+      .replace(/\*\*\*(.*?)\*\*\*/g, '$1')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/___(.*?)___/g, '$1')
+      .replace(/__(.*?)__/g, '$1')
+      .replace(/_(.*?)_/g, '$1');
+  }
 
-    // 4. إزالة حزم الأكواد البرمجية (Code Blocks & Inline Code)
-    .replace(/```[\s\S]*?```/g, (match) => {
-      return match.replace(/```[a-zA-Z]*\n?/g, '').replace(/```$/g, '');
-    })
-    .replace(/`(.*?)`/g, '$1')
+  // 2. Remove Markdown Headers (#, ##, ###)
+  if (removeHeaders) {
+    cleaned = cleaned.replace(/^#{1,6}\s+/gm, '');
+  }
 
-    // 5. إزالة القوائم النقطية (-, *, +)
-    .replace(/^[\s]*[-*+]\s+/gm, '')
+  // 3. Remove Quotes (>)
+  cleaned = cleaned.replace(/^>\s+/gm, '');
 
-    // 6. إزالة الروابط [text](url) مع الإبقاء على النص فقط
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1')
+  // 4. Handle Code Blocks
+  if (removeCodeBlocks) {
+    cleaned = cleaned.replace(/```[\s\S]*?```/g, '');
+  } else {
+    cleaned = cleaned
+      .replace(/```[a-zA-Z]*\n?/g, '')
+      .replace(/```$/g, '')
+      .replace(/`(.*?)`/g, '$1');
+  }
 
-    // 7. توحيد المسافات والأسطر الفارغة الزائدة
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
+  // 5. Remove Bullets (-, *, +)
+  if (removeBullets) {
+    cleaned = cleaned.replace(/^[\s]*[-*+]\s+/gm, '');
+  }
+
+  // 6. Remove Markdown Links [text](url) -> text
+  if (removeLinks) {
+    cleaned = cleaned.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '$1');
+  }
+
+  // 7. Normalize line breaks and trailing spaces
+  return cleaned.replace(/\n{3,}/g, '\n\n').trim();
 }
