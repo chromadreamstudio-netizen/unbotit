@@ -369,3 +369,6 @@ Feel free to check out [our website](https://unbotit.com) for more details!`;
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
